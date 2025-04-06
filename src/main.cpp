@@ -3,11 +3,15 @@
 #include <chrono>
 #include <thread>
 #include "frameTimer.hpp"
-#include "GEnt.hpp"
+#include "Gent.hpp"
 #include "globals.hpp"
 #include "Button.hpp"
-#include "EntArena.hpp"
+#include "Arena.hpp"
 #include <iostream>
+#include "raymath.h"
+#include "Player.hpp"
+#include "FpsCounter.hpp"
+#include "Raycast.hpp"
 
 using namespace std;
 
@@ -29,22 +33,39 @@ i32 main() {
     
     InitWindow(ScreenWidth, ScreenHeight, "mygame");
 
-    addEnt(new Button(vec{350, 250}, vec{100, 50}, "YOOOO", &flipBgCol));
+/*     addEnt(new Button(vec{350, 250}, vec{100, 50}, "YOOOO", &flipBgCol));
     addEnt(new Button(vec{200, 200}, vec{200, 30}, "second button", nullptr));
     addEnt(new Button(vec{500, 200}, vec{200, 150}, "3333 YO", nullptr));
-    //auto prevTime = std::chrono::high_resolution_clock::now();
+    addEnt(new Player()); */
+
+    Arena<Player>* players = new Arena<Player>(1);
+    players->add()->init();
+
+    Arena<Button>* buttons = new Arena<Button>(2);
+    buttons->add()->init(vec{350, 250}, vec{100, 50}, "YOOOO", &flipBgCol);
+    buttons->add()->init(vec{200, 200}, vec{200, 30}, "second button", nullptr);
+    buttons->add()->init(vec{500, 200}, vec{200, 150}, "3333 YO", nullptr);
+
+    Arena<Raycast>* rays = new Arena<Raycast>(4);
+    rays->add()->init(vec{0.0f, 0.0f}, vec{200.0f, 200.0f});
+
     FrameTimer frameTimer;
-    f64 delta;
     while (!WindowShouldClose()) {
         frameTimer.start();
-        updateEnts();
+
+        players->updateAll();
+        buttons->updateAll();
+        rays->updateAll();
 
         BeginDrawing();
+        
+            ClearBackground(bgCol);
 
-        ClearBackground(bgCol);
+            players->drawAll();
+            buttons->drawAll();
+            rays->drawAll();
 
-        drawEnts();
-
+            fps::drawFps();
         EndDrawing();
 
         delta = frameTimer.stop(targetFps);
