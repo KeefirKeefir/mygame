@@ -63,6 +63,9 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "thread": "cpp",
-        "cstdbool": "cpp"
+        "cstdbool": "cpp",
+        "map": "cpp",
+        "stop_token": "cpp",
+        "xtree": "cpp"
     }
 }
