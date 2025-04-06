@@ -26,3 +26,39 @@ using darr = std::vector<T>;
 using str = std::string;
 
 using vec = Vector2;
+
+struct GridPos {
+    u32 x;
+    u32 y;
+};
+
+struct Circle {
+    vec pos;
+    f32 r;
+};
+
+struct Line {
+    vec p1;
+    vec p2;
+};
+
+struct Rect {
+    vec pos;
+    vec dims;
+    Rectangle makeRect() {
+        return Rectangle{pos.x, pos.y, dims.x, dims.y};
+    }
+};
+
+
+enum Shapes {_point, _line, _circle, _rect};
+
+struct Shape {
+    Shapes type;
+    union {
+        vec point;
+        Line line;
+        Circle circle;
+        Rect rect;
+    };
+};
