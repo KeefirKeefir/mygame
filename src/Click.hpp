@@ -1,11 +1,12 @@
 #pragma once
 
-#include "bfECS.hpp"
-#include "GEnt.hpp"
+#include "4becs.hpp"
+#include "Gent.hpp"
 #include "raylib.h"
 
+// Clickable rectangle component
 template <typename T>
-struct Click : Comp {
+struct Click {
     T* owner;
 
     void (*event)();
@@ -56,8 +57,12 @@ void Click<T>::checkMouse() {
         unhover();
         return;
     }
+    if (!(owner->visible)) {
+        return;
+    }
     hover();
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        clicked = true;
         if (event) {
             event();
         }
