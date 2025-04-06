@@ -1,14 +1,14 @@
-#include "EntArena.hpp"
+#include "arena.hpp"
 
-vector<GEnt*> ents;
+vector<Gent*> ents;
 
-void addEnt(GEnt* ent) {
+void addEnt(Gent* ent) {
     ents.push_back(ent);
 }
 
 void drawEnts() {
     for ( auto& ent : ents) {
-        if (ent) {
+        if (ent && ent->visible) {
             ent->draw();
         }
     }
