@@ -7,3 +7,7 @@ i32 FontSizeL = 26;
 i32 FontSizeXL = 32;
 
 u16 targetFps = 60;
+
+f64 delta;
+
+
